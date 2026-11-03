@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pioneer Food Pass Prototype</title>
+<style>
+  :root{--navy:#0f2f4a;--teal:#0d7c86;--gold:#f1b844;--cream:#f7f4ec;--ink:#18222c;--muted:#68727d;--white:#fff;--line:#dde4e8;--green:#2f7d4a;}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:#eef3f5;color:var(--ink);display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}
+  .phone{width:390px;max-width:95vw;background:white;border-radius:34px;box-shadow:0 20px 50px rgba(15,47,74,.22);overflow:hidden;border:1px solid #d7e0e4}
+  .top{background:linear-gradient(135deg,var(--navy),#174e69);color:white;padding:24px 22px 20px}
+  .brand{font-weight:800;letter-spacing:.2px;font-size:19px}.sub{opacity:.84;font-size:13px;margin-top:4px}.save{display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px}.save strong{font-size:31px}.save span{font-size:12px;opacity:.9}
+  .tabs{display:flex;background:white;border-bottom:1px solid var(--line)} .tab{flex:1;border:0;background:white;padding:14px 6px;font-weight:700;color:var(--muted);cursor:pointer}.tab.active{color:var(--teal);border-bottom:3px solid var(--teal)}
+  .view{padding:18px 18px 24px;display:none}.view.active{display:block}
+  h2{font-size:18px;margin:0 0 12px} .hint{font-size:12px;color:var(--muted);margin-bottom:14px}
+  .card{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;background:white;box-shadow:0 3px 10px rgba(0,0,0,.03)}
+  .row{display:flex;justify-content:space-between;gap:12px;align-items:center}.place{font-weight:800}.meta{font-size:12px;color:var(--muted);margin-top:4px}.pill{background:#e8f6f4;color:#086b70;padding:7px 9px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+  .surplus{border-left:5px solid var(--gold);background:#fffaf0}.price{font-weight:900;color:var(--green)}.old{text-decoration:line-through;color:#8a939c;margin-left:4px;font-size:12px}
+  .btn{width:100%;border:0;border-radius:13px;padding:13px 15px;background:var(--teal);color:white;font-weight:800;cursor:pointer;margin-top:12px}.btn.secondary{background:#eef7f8;color:var(--teal);border:1px solid #b7dadd}
+  .qr{width:176px;height:176px;margin:18px auto;background:
+   linear-gradient(90deg,#111 10px,transparent 10px) 0 0/28px 28px,
+   linear-gradient(#111 10px,transparent 10px) 0 0/28px 28px,
+   linear-gradient(90deg,transparent 18px,#111 18px 26px,transparent 26px) 0 0/28px 28px,
+   linear-gradient(transparent 18px,#111 18px 26px,transparent 26px) 0 0/28px 28px;
+   border:12px solid white;outline:1px solid #cfd7db;border-radius:8px}
+  .center{text-align:center}.status{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-weight:800;font-size:13px;background:#eef8f1;padding:8px 10px;border-radius:999px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .footer{font-size:11px;color:#7b858e;text-align:center;margin-top:18px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="phone" role="application" aria-label="Pioneer Food Pass prototype">
+  <div class="top">
+    <div class="brand">Pioneer Food Pass</div>
+    <div class="sub">CSU East Bay student food-access prototype</div>
+    <div class="save"><div><span>Saved this month</span><br><strong>$42.60</strong></div><div class="status"><i class="dot"></i> Pass active</div></div>
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-view="home">Home</button>
+    <button class="tab" data-view="deals">Deals</button>
+    <button class="tab" data-view="pass">My Pass</button>
+  </div>
+  <section id="home" class="view active">
+    <h2>Nearby food savings</h2>
+    <div class="hint">Student-specific discounts from existing food businesses. No warehouse or delivery fleet required.</div>
+    <div class="card"><div class="row"><div><div class="place">Pioneer Dining</div><div class="meta">Campus • 0.1 mi</div></div><div class="pill">30% off</div></div></div>
+    <div class="card"><div class="row"><div><div class="place">Local Café Partner</div><div class="meta">Hayward • 0.8 mi</div></div><div class="pill">30% off</div></div></div>
+    <div class="card surplus"><div class="row"><div><div class="place">Tonight's surplus meal</div><div class="meta">Vegetarian entrée • after 6 PM</div></div><div><span class="price">$5.00</span><span class="old">$10</span></div></div></div>
+    <button class="btn" onclick="showView('deals')">Browse today's deals</button>
+  </section>
+  <section id="deals" class="view">
+    <h2>Today's deals</h2>
+    <div class="hint">Base discounts are predictable; surplus offers can increase near closing time.</div>
+    <div class="card surplus"><div class="place">Fresh Bowl Combo</div><div class="meta">Local Café Partner • pickup 6–8 PM</div><div class="row" style="margin-top:10px"><div><span class="price">50% off</span></div><button class="btn secondary" style="width:auto;margin:0;padding:9px 12px" onclick="alert('Deal saved to your pass')">Save</button></div></div>
+    <div class="card"><div class="place">Groceries + produce</div><div class="meta">Partner Market • all day</div><div class="row" style="margin-top:10px"><div class="pill">30% off eligible items</div><button class="btn secondary" style="width:auto;margin:0;padding:9px 12px" onclick="alert('Partner directions would open here')">Details</button></div></div>
+    <div class="card"><div class="place">Campus meal</div><div class="meta">Pioneer Dining • all day</div><div class="row" style="margin-top:10px"><div class="pill">30% off</div><button class="btn secondary" style="width:auto;margin:0;padding:9px 12px" onclick="showView('pass')">Use pass</button></div></div>
+  </section>
+  <section id="pass" class="view center">
+    <h2>Your private student pass</h2>
+    <div class="hint">Partners see only an active/valid pass—not the student's financial-aid or basic-needs details.</div>
+    <div class="qr" aria-label="Prototype QR pass"></div>
+    <div style="font-weight:800">Rachel L. • Active through Dec 2026</div>
+    <div class="meta" style="margin-top:6px">Prototype ID: PFP-1026-418</div>
+    <button class="btn" onclick="alert('Prototype scan successful: 30% discount applied')">Simulate partner scan</button>
+    <div class="footer">Prototype only • discounts and partner names shown are illustrative, not current commitments.</div>
+  </section>
+</div>
+<script>
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.view===id));}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
+</script>
+</body></html>
